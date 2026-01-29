@@ -1,0 +1,63 @@
+schedule:
+  mode: "biweekly"
+  timezone: "Asia/Taipei"
+  window_days: 14
+
+limits:
+  papers_per_cycle: 3
+  arxiv_max_results: 200
+  per_topic_cap: 2
+  enable_keyphrases: true
+
+sources:
+  arxiv:
+    enabled: true
+    categories: ["cs.LG","cs.AI","cs.CL","stat.ML"]
+  hf:
+    enabled: true
+    queries: ["reasoning", "agents", "retrieval", "inference", "efficient", "long context"]
+  openreview:
+    enabled: true
+    venues: ["ICLR.cc/2025/Conference"]
+    accept_only: true
+
+topics:
+  method: "keyword_buckets"
+  buckets:
+    LLM: ["llm","language model","transformer","reasoning","alignment","instruction"]
+    RAG: ["retrieval","rerank","embedding","vector","bm25","rag"]
+    Agents: ["agent","tool","planning","workflow","multi-agent"]
+    Systems: ["inference","latency","throughput","memory","serving","quantization","kernel"]
+    RL: ["reinforcement","q-learning","policy","actor-critic","marl"]
+
+selection_strategy:
+  trending:
+    weights:
+      hf_rank: 0.6
+      recency: 0.4
+    fallback: "arxiv_recent_keyword"
+  quality:
+    venue_bonus:
+      ICLR: 1.0
+      NeurIPS: 1.0
+      ICML: 1.0
+    tie_break: ["mean_rating_desc", "published_desc"]
+  exploration:
+    weights:
+      novelty_keywords: 0.4
+      recency: 0.3
+      has_code_link: 0.2
+      topic_diversity: 0.1
+
+email:
+  enabled: true
+  from_name: "ML Digest Bot"
+  from_address: "YOUR_EMAIL@gmail.com"
+  to_addresses: ["YOUR_EMAIL@gmail.com"]
+  smtp_host: "smtp.gmail.com"
+  smtp_port: 587
+  use_tls: true
+  subject_prefix: "ML Digest"
+
+storage:
+  runs_dir: "runs"
