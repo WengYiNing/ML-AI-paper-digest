@@ -1,0 +1,8 @@
+requests
+feedparser
+pyyaml
+jinja2
+rapidfuzz
+python-dateutil
+openreview-py
+yake
