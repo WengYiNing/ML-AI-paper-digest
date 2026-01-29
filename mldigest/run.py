@@ -1,10 +1,7 @@
-"""CLI entrypoint."""
 from __future__ import annotations
-
 import argparse
 from datetime import datetime
 from pathlib import Path
-
 from mldigest.config import load_config, masked_config
 from mldigest.delivery.smtp_sender import send_email
 from mldigest.ingest.arxiv_client import fetch_arxiv_papers
@@ -17,7 +14,6 @@ from mldigest.storage.artifacts import write_artifacts
 from mldigest.utils import get_logger, window_bounds
 
 logger = get_logger(__name__)
-
 
 def _apply_keyphrases(papers: list[Paper], enable: bool) -> None:
     if not enable:
@@ -36,14 +32,13 @@ def _apply_keyphrases(papers: list[Paper], enable: bool) -> None:
         phrases = [phrase for phrase, _score in extractor.extract_keywords(paper.abstract)]
         paper.keyphrases = phrases
 
-
 def _print_summary(papers: list[Paper]) -> None:
     for paper in papers:
         logger.info("[%s] %s", paper.signals.get("role"), paper.title)
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Zero-LLM ML Digest")
+    parser = argparse.ArgumentParser(description="Weekly ML / AI paper digest generator")
     parser.add_argument("--config", required=True, help="Path to config YAML")
     parser.add_argument("--dry-run", action="store_true", help="Skip email delivery")
     parser.add_argument("--print", dest="print_out", action="store_true", help="Print summary to stdout")

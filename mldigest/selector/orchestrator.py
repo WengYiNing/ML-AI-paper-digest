@@ -126,7 +126,7 @@ def orchestrate_selection(
         selected.append(quality)
 
     exploration_candidates = []
-    for paper in arxiv_papers:
+    for paper in merged_candidates:
         if any(fuzzy_title_match(paper.title, chosen.title) for chosen in selected):
             continue
         if paper.signals.get("hf"):
