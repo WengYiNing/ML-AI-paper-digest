@@ -23,7 +23,10 @@ def fetch_hf_hits(queries: list[str], per_query: int = 20) -> Dict[str, dict]:
         except Exception as exc:  # pragma: no cover - network failure
             logger.warning("HF search failed for %s: %s", query, exc)
             continue
-        items = data.get("items") or data.get("papers") or data.get("hits") or []
+        items = (
+            data if isinstance(data, list)
+            else data.get("items") or data.get("papers") or data.get("hits") or []
+        )
         for rank, item in enumerate(items[:per_query], start=1):
             arxiv_id = item.get("arxiv_id") or item.get("arxivId")
             paper_url = item.get("paper_url") or item.get("url") or ""
