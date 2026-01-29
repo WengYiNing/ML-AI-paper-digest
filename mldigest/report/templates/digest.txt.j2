@@ -1,0 +1,15 @@
+{{ subject }}
+Window: {{ window_start }} ~ {{ window_end }}
+
+{% for paper in papers %}
+[{{ paper.signals.role }}] {{ paper.title }}
+Authors: {{ paper.authors | join(', ') }}
+Published: {{ paper.published_at }}
+Link: {{ paper.links.abs_url or paper.links.openreview_url or paper.links.hf_url or 'N/A' }}
+Topics: {{ paper.topics | join(', ') }}
+{% if paper.keyphrases %}Keyphrases: {{ paper.keyphrases | join(', ') }}{% endif %}
+Reasons:
+{% for reason in paper.selection_reasons %}- {{ reason }}
+{% endfor %}
+
+{% endfor %}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{{ subject }}</title>
+  <style>
+    body { font-family: Arial, sans-serif; color: #1b1f24; }
+    .paper { border-bottom: 1px solid #e5e7eb; padding: 16px 0; }
+    .meta { color: #6b7280; font-size: 0.9em; }
+    .tags { margin: 8px 0; }
+    .tag { display: inline-block; background: #f3f4f6; padding: 2px 6px; border-radius: 4px; margin-right: 4px; }
+  </style>
+</head>
+<body>
+  <h2>{{ subject }}</h2>
+  <p>Window: {{ window_start }} ~ {{ window_end }}</p>
+  {% for paper in papers %}
+  <div class="paper">
+    <h3>
+      <a href="{{ paper.links.abs_url or paper.links.openreview_url or paper.links.hf_url or '#' }}">
+        {{ paper.title }}
+      </a>
+      <span class="meta">({{ paper.signals.role }})</span>
+    </h3>
+    <div class="meta">{{ paper.authors | join(', ') }}</div>
+    <div class="meta">Published: {{ paper.published_at }}</div>
+    <p>{{ (paper.abstract or '')[:400] }}{% if (paper.abstract or '')|length > 400 %}...{% endif %}</p>
+    {% if paper.topics %}
+    <div class="tags">
+      {% for topic in paper.topics %}<span class="tag">{{ topic }}</span>{% endfor %}
+    </div>
+    {% endif %}
+    {% if paper.keyphrases %}
+    <div class="tags">
+      {% for phrase in paper.keyphrases %}<span class="tag">{{ phrase }}</span>{% endfor %}
+    </div>
+    {% endif %}
+    <ul>
+      {% for reason in paper.selection_reasons %}
+      <li>{{ reason }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+</body>
+</html>
