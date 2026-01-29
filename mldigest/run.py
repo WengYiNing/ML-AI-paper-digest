@@ -60,7 +60,8 @@ def main() -> None:
 
     hf_hits = {}
     if cfg["sources"]["hf"]["enabled"]:
-        hf_hits = fetch_hf_hits(cfg["sources"]["hf"]["queries"])
+        hf_month = cfg["sources"]["hf"].get("month") or datetime.now().strftime("%Y-%m")
+        hf_hits = fetch_hf_hits(hf_month)
 
     openreview_papers: list[Paper] = []
     if cfg["sources"]["openreview"]["enabled"]:

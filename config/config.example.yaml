@@ -15,7 +15,7 @@ sources:
     categories: ["cs.LG","cs.AI","cs.CL","stat.ML"]
   hf:
     enabled: true
-    queries: ["reasoning", "agents", "retrieval", "inference", "efficient", "long context"]
+    month: "2025-03"
   openreview:
     enabled: true
     venues: ["ICLR.cc/2025/Conference"]

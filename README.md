@@ -17,7 +17,7 @@ pip install -r requirements.txt
 - `schedule.mode`: `biweekly` 或 `monthly`
 - `schedule.window_days`: 資料抓取時間窗（biweekly 預設 14 天）
 - `sources.arxiv.categories`: arXiv 分類
-- `sources.hf.queries`: Hugging Face Papers 搜尋關鍵字
+- `sources.hf.month`: Hugging Face daily papers 來源月份（格式 YYYY-MM）
 - `sources.openreview.venues`: OpenReview venue（可替換為其他年份/會議）
 - `topics.buckets`: 規則化主題關鍵字
 - `email`: SMTP 設定（請勿直接寫入密碼）

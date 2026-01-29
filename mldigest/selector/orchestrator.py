@@ -2,9 +2,9 @@
 from __future__ import annotations
 
 from typing import Dict, List, Tuple
+import random
 
 from mldigest.models import Paper
-from mldigest.selector.exploration import select_exploration
 from mldigest.selector.quality import select_quality
 from mldigest.selector.trending import select_trending
 from mldigest.signals.hf_signal import apply_hf_signal
@@ -133,20 +133,11 @@ def orchestrate_selection(
             continue
         exploration_candidates.append(paper)
 
-    exploration_weights = config["selection_strategy"]["exploration"]["weights"]
-    selected_topics = [topic for paper in selected for topic in paper.topics]
-    exploration, exploration_debug = select_exploration(
-        exploration_candidates,
-        window_days,
-        exploration_weights,
-        buckets,
-        selected_topics,
-    )
-    scoring_debug["exploration"] = exploration_debug
-    if exploration:
+    scoring_debug["exploration"] = []
+    if exploration_candidates:
+        exploration = random.choice(exploration_candidates)
         exploration.selection_reasons.append("未在 HF 上榜（探索）")
-        if exploration.signals.get("engineering", {}).get("has_code_link"):
-            exploration.selection_reasons.append("含 GitHub 連結")
+        exploration.selection_reasons.append("隨機選擇自 arXiv 候選")
         recency_reason = _selection_reason_recency(exploration, window_days)
         if recency_reason:
             exploration.selection_reasons.append(recency_reason)

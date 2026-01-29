@@ -59,7 +59,6 @@ def validate_config(cfg: Dict[str, Any]) -> None:
 
     hf = _require_dict(sources, "hf", "sources.")
     _require(hf, "enabled", "sources.hf.")
-    _require_list(hf, "queries", "sources.hf.")
 
     openreview = _require_dict(sources, "openreview", "sources.")
     _require(openreview, "enabled", "sources.openreview.")
